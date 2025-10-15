@@ -53,9 +53,33 @@ public class PolishParser extends ParserAbstract {
         match(TokenType.SEMICOLON);
     }
 
+    void printStatement() {
+        match(TokenType.PRINT);
+        expr();
+        System.out.println("print");
+        match(TokenType.SEMICOLON);
+    }
+
+    void statement() {
+        if (currentToken.getType() == TokenType.PRINT) {
+            printStatement();
+        } else if (currentToken.getType() == TokenType.LET) {
+            letStatement();
+        } else {
+            throw new Error("syntax error");
+        }
+    }
+
+    void statements() {
+
+        while (currentToken.getType() != TokenType.EOF) {
+            statement();
+        }
+    }
+
     @Override
     public void parse() {
-        letStatement();
+        statements();
     }
 
 }

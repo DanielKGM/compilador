@@ -75,7 +75,7 @@ number → 0 | .. | 999 | ..
 
 - Devem ser incluídos à gramática os identificadores das variáveis e como diferenciá-los de palavras reservadas (_keywords_)
 
-### 3.1 Identificadores na Gramática
+### 3.1 Identificadores de Variáveis
 
 - A GLC da linguagem deverá ser atualizada com `termos`, que agora podem ser `números` ou `identificadores` de variáveis:
 
@@ -91,9 +91,19 @@ identifier → [a-zA-Z_][a-zA-Z_0-9]*
 
 _Dessa forma, dados de entrada como `10 + preco + 22 - desconto` podem ser aceitos pelo interpretador._
 
-- Para atribuilções, uma regra de produção extra pode ser encaixada à gramática:
+### _Statements_ de Atribuição e Impressão
+
+- Para atribuilções de variáveis, uma regra de produção extra pode ser encaixada à gramática:
 
 `letStatement → 'let' identifier '=' expression ';'`
+
+- De modo semelhante, o parser pode aceitar um statement de impressão:
+
+`printStament → 'print' expression ';'`
+
+- Agora a gramática pode ser considerada uma coleção de _statements_, prontos para uso em um interpretador simples:
+
+`statements → statement*`
 
 ## Referências
 

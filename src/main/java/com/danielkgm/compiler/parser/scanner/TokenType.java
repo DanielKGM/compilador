@@ -8,6 +8,7 @@ public enum TokenType {
     SEMICOLON,
 
     //
+    PRINT,
     LET,
     NUMBER,
     EOF,

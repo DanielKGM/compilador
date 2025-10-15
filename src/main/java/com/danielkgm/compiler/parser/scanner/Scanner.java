@@ -5,7 +5,7 @@ import java.util.Map;
 public class Scanner {
 
     private static final Map<String, TokenType> KEYWORDS = Map.of(
-            "let", TokenType.LET);
+            "let", TokenType.LET, "print", TokenType.PRINT);
 
     private byte[] input;
     private int current;
