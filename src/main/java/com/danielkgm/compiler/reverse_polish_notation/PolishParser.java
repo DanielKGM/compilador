@@ -3,10 +3,19 @@ package com.danielkgm.compiler.reverse_polish_notation;
 import com.danielkgm.compiler.parser.ParserAbstract;
 import com.danielkgm.compiler.parser.scanner.TokenType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PolishParser extends ParserAbstract {
+
+    private final List<String> output = new ArrayList<>();
 
     public PolishParser(byte[] input) {
         super(input);
+    }
+
+    public List<String> output() {
+        return output;
     }
 
     void expr() {
@@ -15,30 +24,31 @@ public class PolishParser extends ParserAbstract {
     }
 
     void number() {
-        System.out.println("push " + currentToken.getLexeme());
+        output.add("push " + currentToken.getLexeme());
         match(TokenType.NUMBER);
     }
 
     void term() {
-        if (currentToken.getType() == TokenType.NUMBER)
+        if (currentToken.getType() == TokenType.NUMBER) {
             number();
-        else if (currentToken.getType() == TokenType.IDENT) {
-            System.out.println("push " + currentToken.getLexeme());
+        } else if (currentToken.getType() == TokenType.IDENT) {
+            output.add("push " + currentToken.getLexeme());
             match(TokenType.IDENT);
-        } else
+        } else {
             throw new Error("syntax error");
+        }
     }
 
     void oper() {
         if (currentToken.getType() == TokenType.PLUS) {
             match(TokenType.PLUS);
             term();
-            System.out.println("add");
+            output.add("add");
             oper();
         } else if (currentToken.getType() == TokenType.MINUS) {
             match(TokenType.MINUS);
             term();
-            System.out.println("sub");
+            output.add("sub");
             oper();
         }
     }
@@ -49,14 +59,14 @@ public class PolishParser extends ParserAbstract {
         match(TokenType.IDENT);
         match(TokenType.EQ);
         expr();
-        System.out.println("pop " + id);
+        output.add("pop " + id);
         match(TokenType.SEMICOLON);
     }
 
     void printStatement() {
         match(TokenType.PRINT);
         expr();
-        System.out.println("print");
+        output.add("print");
         match(TokenType.SEMICOLON);
     }
 
@@ -71,7 +81,6 @@ public class PolishParser extends ParserAbstract {
     }
 
     void statements() {
-
         while (currentToken.getType() != TokenType.EOF) {
             statement();
         }
@@ -81,5 +90,4 @@ public class PolishParser extends ParserAbstract {
     public void parse() {
         statements();
     }
-
 }
