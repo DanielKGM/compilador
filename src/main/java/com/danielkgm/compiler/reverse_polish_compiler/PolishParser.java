@@ -1,8 +1,10 @@
-package com.danielkgm.compiler.parser;
+package com.danielkgm.compiler.reverse_polish_compiler;
 
-public class PolishNotationParser extends ParserAbstract implements ParserInterface {
+import com.danielkgm.compiler.parser.ParserAbstract;
 
-    public PolishNotationParser(byte[] input) {
+public class PolishParser extends ParserAbstract {
+
+    public PolishParser(byte[] input) {
         super(input);
     }
 

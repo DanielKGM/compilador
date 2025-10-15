@@ -1,14 +1,14 @@
 package com.danielkgm.compiler.parser;
 
 import com.danielkgm.compiler.parser.scanner.Scanner;
+import com.danielkgm.compiler.parser.scanner.Token;
 
-public abstract class ParserAbstract {
+public abstract class ParserAbstract implements ParserInterface {
 
     protected Scanner scan;
-    protected char currentToken;
+    protected Token currentToken;
 
-    protected ParserAbstract(byte[] input) {
-        scan = new Scanner(input);
+    protected ParserAbstract(byte[] input, Scanner scan) {
         currentToken = scan.nextToken();
     }
 

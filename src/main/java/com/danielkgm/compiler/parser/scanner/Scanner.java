@@ -1,15 +1,15 @@
 package com.danielkgm.compiler.parser.scanner;
 
-public class Scanner {
+public abstract class Scanner {
 
     private byte[] input;
     private int current;
 
-    public Scanner(byte[] input) {
+    protected Scanner(byte[] input) {
         this.input = input;
     }
 
-    private char peek() {
+    protected char peek() {
         if (current < input.length) {
             return (char) input[current];
         }
@@ -17,30 +17,48 @@ public class Scanner {
         return '\0';
     }
 
-    private void advance() {
+    protected void advance() {
         char ch = peek();
         if (ch != '\0') {
             current++;
         }
     }
 
-    public char nextToken() {
+    private Token number() {
+        int start = current;
+
+        while (Character.isDigit(peek())) {
+            advance();
+        }
+
+        String n = new String(input, start, current - start);
+        return new Token(TokenType.NUMBER, n);
+    }
+
+    public Token nextToken() {
         char ch = peek();
 
-        if (Character.isDigit(ch)) {
+        if (ch == '0') {
             advance();
-            return ch;
+            return new Token(TokenType.NUMBER, Character.toString(ch));
+        }
+
+        if (Character.isDigit(ch)) {
+            return number();
         }
 
         switch (ch) {
-            case '+', '-':
+            case '+':
                 advance();
-                return ch;
+                return new Token(TokenType.PLUS, "+");
+            case '-':
+                advance();
+                return new Token(TokenType.MINUS, "-");
+            case '\0':
+                return new Token(TokenType.EOF, "EOF");
             default:
-                break;
+                throw new Error("lexical error at " + ch);
         }
-
-        return '\0';
     }
 
 }
