@@ -1,12 +1,21 @@
 package com.danielkgm.compiler.parser.scanner;
 
+import java.util.Map;
+
 public class Scanner {
+
+    private static final Map<String, TokenType> KEYWORDS = Map.of(
+            "let", TokenType.LET);
 
     private byte[] input;
     private int current;
 
     public Scanner(byte[] input) {
         this.input = input;
+    }
+
+    public Map<String, TokenType> getKEYWORDS() {
+        return KEYWORDS;
     }
 
     private char peek() {
@@ -55,12 +64,14 @@ public class Scanner {
 
     private Token identifier() {
         int start = current;
-        while (isAlphaNumeric(peek())) {
+        while (isAlphaNumeric(peek()))
             advance();
-        }
 
         String id = new String(input, start, current - start);
-        return new Token(TokenType.IDENT, id);
+        TokenType type = KEYWORDS.get(id);
+        if (type == null)
+            type = TokenType.IDENT;
+        return new Token(type, id);
     }
 
     public Token nextToken() {
@@ -87,11 +98,18 @@ public class Scanner {
             case '-':
                 advance();
                 return new Token(TokenType.MINUS, "-");
+            case '=':
+                advance();
+                return new Token(TokenType.EQ, "=");
+            case ';':
+                advance();
+                return new Token(TokenType.SEMICOLON, ";");
             case '\0':
                 return new Token(TokenType.EOF, "EOF");
             default:
                 throw new Error("lexical error at " + ch);
         }
+
     }
 
 }

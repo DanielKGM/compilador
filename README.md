@@ -1,6 +1,6 @@
-# Etapas (PT-BR)
+# Simples Tradutor
 
-## 1. Tradutor Simples
+## 1. Analisador Sintático
 
 - Converter notação infixada para pós-fixada;
 - Exemplo: `2 + 2 → 2 2 +`;
@@ -62,7 +62,7 @@ expr →  number oper
 oper →  + number oper
         | - number oper
         | ε
-number → 0 | .. | 9
+number → 0 | .. | 999 | ..
 ```
 
 ### 2.2 Implementação do _Scanner_
@@ -72,6 +72,28 @@ number → 0 | .. | 9
 - [Scanner.java]() (Sem Suporte a Variáveis)
 
 ## 3. Suporte a Variáveis
+
+- Devem ser incluídos à gramática os identificadores das variáveis e como diferenciá-los de palavras reservadas (_keywords_)
+
+### 3.1 Identificadores na Gramática
+
+- A GLC da linguagem deverá ser atualizada com `termos`, que agora podem ser `números` ou `identificadores` de variáveis:
+
+```Java
+expr →  term oper
+oper →  + term oper
+        | - term oper
+        | ε
+term →  number | identifier
+number → 0 | .. | 999 | ..
+identifier → [a-zA-Z_][a-zA-Z_0-9]*
+```
+
+_Dessa forma, dados de entrada como `10 + preco + 22 - desconto` podem ser aceitos pelo interpretador._
+
+- Para atribuilções, uma regra de produção extra pode ser encaixada à gramática:
+
+`letStatement → 'let' identifier '=' expression ';'`
 
 ## Referências
 
