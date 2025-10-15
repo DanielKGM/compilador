@@ -6,12 +6,12 @@ public class PolishNotationParser extends ParserAbstract implements ParserInterf
         this.input = input;
     }
 
-    void expr() {
+    private void expr() {
         digit();
         oper();
     }
 
-    void digit() {
+    private void digit() {
         if (!Character.isDigit(peek())) {
             throw new Error("syntax error");
         }
@@ -20,7 +20,7 @@ public class PolishNotationParser extends ParserAbstract implements ParserInterf
         match(peek());
     }
 
-    void oper() {
+    private void oper() {
         if (peek() == '+') {
             match('+');
             digit();

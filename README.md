@@ -30,6 +30,10 @@ oper →  + digit oper
 digit → 0 | .. | 9
 ```
 
-## Referência
+### 1.1 Implementação do Parser (Notação Infixada)
+
+- PolishNotationParser.java
+
+## Referências
 
 SOUZA COSTA, S. **Tradução Dirigida por Sintaxe**. Disponível em: <https://profsergiocosta.notion.site/Tradu-o-dirigida-por-sintaxe-bc590c67d8234f81bee5cfdb505f2dd1?pvs=18>. Acesso em: 15 out. 2025.
