@@ -44,9 +44,27 @@ digit → 0 | .. | 9
 - O `analisador léxico` (_scanner_) é subordinado ao **analisador sintático** (_parser_);
 
 ![relacao lexico e sintatico](image.png)
-_Figura 1: Sempre que o analisador sintático (parser) precisa de palavras (tokens), o analisador léxico (scanner), que tem contato com os caracteres do programa de entrada, irá gerá-las. Sob demanda, nunca de uma vez [1]._
+_Figura 1: Sempre que o analisador sintático (parser) precisa de palavras (tokens), o analisador léxico (scanner), que tem contato com os caracteres do programa de entrada, irá gerá-las. Sob demanda, nunca de uma vez, pois nem todos os tokens podem ser necessários [1]._
 
-### 2.1 Implementação do Scanner
+### 2.3 Atualização na Gramática
+
+- Como já foi citado, iremos de números com apenas um dígito para números positivos representados por mais de um dígito, conforme o autômato finito (Figura 2):
+
+![Autômato Finito](image-1.png)
+
+_Figura 2: Autômato Finito para nova GLC de números inteiros [1]._
+
+- A GLC atualizada:
+
+```Java
+expr →  number oper
+oper →  + number oper
+        | - number oper
+        | ε
+number → 0 | .. | 9
+```
+
+### 2.2 Implementação do Scanner
 
 - Abordagem Adhoc: _Scanner_ será implementado com base em expressões regulares e outros métodos nativos do Java (Scanner.java)
 

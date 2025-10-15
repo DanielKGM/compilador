@@ -1,15 +1,15 @@
 package com.danielkgm.compiler.parser.scanner;
 
-public abstract class Scanner {
+public class Scanner {
 
     private byte[] input;
     private int current;
 
-    protected Scanner(byte[] input) {
+    public Scanner(byte[] input) {
         this.input = input;
     }
 
-    protected char peek() {
+    private char peek() {
         if (current < input.length) {
             return (char) input[current];
         }
@@ -17,7 +17,7 @@ public abstract class Scanner {
         return '\0';
     }
 
-    protected void advance() {
+    private void advance() {
         char ch = peek();
         if (ch != '\0') {
             current++;
@@ -35,7 +35,16 @@ public abstract class Scanner {
         return new Token(TokenType.NUMBER, n);
     }
 
+    private void skipWhitespace() {
+        char ch = peek();
+        while (ch == ' ' || ch == '\r' || ch == '\t' || ch == '\n') {
+            advance();
+            ch = peek();
+        }
+    }
+
     public Token nextToken() {
+        skipWhitespace();
         char ch = peek();
 
         if (ch == '0') {
