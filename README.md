@@ -34,6 +34,22 @@ digit → 0 | .. | 9
 
 - PolishNotationParser.java
 
+## 2. Analisador Léxico
+
+- Os números serão representados por mais de um dígito;
+- Possível através do `analisador léxico` (_scanner_):
+  - Transforma um fluxo de caracteres em um fluxo de palavras na linguagem de entrada, para classificar as palavras gramaticalmente;
+- O `analisador léxico` aplica a microssintaxe, que especifica como agrupar os caracteres em `palavras`;
+- `Palavras` têm duas partes: lexema e categoria sintática. Exemplo: 'banana' tem o lexema 'banana' e a classe 'identificador' se `ID: [a-zA-Z_][a-zA-Z_0-9]*`;
+- O `analisador léxico` (_scanner_) é subordinado ao **analisador sintático** (_parser_);
+
+![relacao lexico e sintatico](image.png)
+_Figura 1: Sempre que o analisador sintático (parser) precisa de palavras (tokens), o analisador léxico (scanner), que tem contato com os caracteres do programa de entrada, irá gerá-las. Sob demanda, nunca de uma vez [1]._
+
+### 2.1 Implementação do Scanner
+
+- Abordagem Adhoc: _Scanner_ será implementado com base em expressões regulares e outros métodos nativos do Java (Scanner.java)
+
 ## Referências
 
-SOUZA COSTA, S. **Tradução Dirigida por Sintaxe**. Disponível em: <https://profsergiocosta.notion.site/Tradu-o-dirigida-por-sintaxe-bc590c67d8234f81bee5cfdb505f2dd1?pvs=18>. Acesso em: 15 out. 2025.
+[1] SOUZA COSTA, S. **Tradução Dirigida por Sintaxe**. Disponível em: <https://profsergiocosta.notion.site/Tradu-o-dirigida-por-sintaxe-bc590c67d8234f81bee5cfdb505f2dd1?pvs=18>. Acesso em: 15 out. 2025.

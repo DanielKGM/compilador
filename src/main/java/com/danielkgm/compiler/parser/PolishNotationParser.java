@@ -1,9 +1,9 @@
-package com.danielkgm.simple_translator.parser;
+package com.danielkgm.compiler.parser;
 
 public class PolishNotationParser extends ParserAbstract implements ParserInterface {
 
     public PolishNotationParser(byte[] input) {
-        this.input = input;
+        super(input);
     }
 
     private void expr() {
@@ -11,22 +11,24 @@ public class PolishNotationParser extends ParserAbstract implements ParserInterf
         oper();
     }
 
-    private void digit() {
-        if (!Character.isDigit(peek())) {
+    void digit() {
+
+        if (!Character.isDigit(currentToken)) {
             throw new Error("syntax error");
         }
 
-        System.out.println("push " + peek());
-        match(peek());
+        System.out.println("push " + currentToken);
+        match(currentToken);
+
     }
 
-    private void oper() {
-        if (peek() == '+') {
+    void oper() {
+        if (currentToken == '+') {
             match('+');
             digit();
             System.out.println("add");
             oper();
-        } else if (peek() == '-') {
+        } else if (currentToken == '-') {
             match('-');
             digit();
             System.out.println("sub");

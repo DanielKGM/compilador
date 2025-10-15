@@ -1,4 +1,4 @@
-package com.danielkgm.simple_translator.parser;
+package com.danielkgm.compiler.parser;
 
 public interface ParserInterface {
     public void parse();
