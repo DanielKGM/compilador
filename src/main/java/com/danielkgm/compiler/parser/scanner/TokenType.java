@@ -4,5 +4,6 @@ public enum TokenType {
     PLUS,
     MINUS,
     NUMBER,
-    EOF
+    EOF,
+    IDENT
 }

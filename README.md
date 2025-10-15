@@ -4,14 +4,15 @@
 
 - Converter notação infixada para pós-fixada;
 - Exemplo: `2 + 2 → 2 2 +`;
-- Até o momento sem analisador léxico, pois os dígitos são os números naturais\*;
-- Reconhecedor de uma gramática livre de contexto sem ambiguidades → `analisador sintático preditivo`;
-- `Analisador sintático preditivo` "prevê" qual regra de produção da gramática será utilizada na estrutura da árvore sintática, lendo a entrada da esquerda para a direita;
-- Ou seja, a gramática não pode ser `recursiva à esquerda`;
+- Na prática, são esperadas operações com pilha na saída do programa: `push 2 push 2 add`;
+- Temporariamente, os dígitos serão números naturais;
+- Reconhece uma gramática livre de contexto (GLC) sem ambiguidades → `analisador sintático preditivo`;
+- `Analisador sintático preditivo` "prevê" qual regra de produção da gramática será utilizada, ao ler a entrada da esquerda para a direita;
+- Por isso, a gramática não pode ser `recursiva à esquerda`;
 
 ### 1.1 Gramática de Entrada (Notação Infixada)
 
-- Primeiramente, expressões infixadas tipo `2 + 1 - 1` podem ser descritas pela GLC recursiva `à esquerda`:
+- Expressões infixadas tipo `2 + 1 - 1` podem ser descritas pela GLC recursiva `à esquerda`:
 
 ```Java
 expr →  expr + digit
@@ -20,7 +21,7 @@ expr →  expr + digit
 digit → 0 | .. | 9
 ```
 
-- Equivalente à GLC recursiva `à direita`:
+- Equivalente à GLC recursiva `à direita` (correta):
 
 ```Java
 expr →  digit oper
@@ -30,9 +31,9 @@ oper →  + digit oper
 digit → 0 | .. | 9
 ```
 
-### 1.2 Implementação do Parser
+### 1.2 Implementação do Parser Inicial
 
-- PolishNotationParser.java
+- [PolishNotationParser.java](https://github.com/DanielKGM/compilador/tree/8228632477d0a41522395936e3c7a4cb4fef393c/src/main/java/com/danielkgm/simple_translator/parser) (Sem Analisador Léxico)
 
 ## 2. Analisador Léxico
 
@@ -64,9 +65,13 @@ oper →  + number oper
 number → 0 | .. | 9
 ```
 
-### 2.2 Implementação do Scanner
+### 2.2 Implementação do _Scanner_
 
-- Abordagem Adhoc: _Scanner_ será implementado com base em expressões regulares e outros métodos nativos do Java (Scanner.java)
+- Abordagem Adhoc: _Scanner_ será implementado com base em expressões regulares e outros métodos nativos do Java. Autômatos são meramente ilustrativos.
+
+- [Scanner.java]() (Sem Suporte a Variáveis)
+
+## 3. Suporte a Variáveis
 
 ## Referências
 
