@@ -3,19 +3,20 @@ package com.danielkgm.compiler.reverse_polish_notation;
 import com.danielkgm.compiler.parser.ParserAbstract;
 import com.danielkgm.compiler.parser.scanner.TokenType;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PolishParser extends ParserAbstract {
 
-    private final List<String> output = new ArrayList<>();
+    private final StringBuilder output = new StringBuilder();
 
     public PolishParser(byte[] input) {
         super(input);
     }
 
-    public List<String> output() {
-        return output;
+    public String getOutput() {
+        return output.toString();
+    }
+
+    private void emit(String cmd) {
+        output.append(cmd).append(System.lineSeparator());
     }
 
     void expr() {
@@ -24,7 +25,7 @@ public class PolishParser extends ParserAbstract {
     }
 
     void number() {
-        output.add("push " + currentToken.getLexeme());
+        emit("PUSH " + currentToken.getLexeme());
         match(TokenType.NUMBER);
     }
 
@@ -32,7 +33,7 @@ public class PolishParser extends ParserAbstract {
         if (currentToken.getType() == TokenType.NUMBER) {
             number();
         } else if (currentToken.getType() == TokenType.IDENT) {
-            output.add("push " + currentToken.getLexeme());
+            emit("PUSH " + currentToken.getLexeme());
             match(TokenType.IDENT);
         } else {
             throw new Error("syntax error");
@@ -43,12 +44,12 @@ public class PolishParser extends ParserAbstract {
         if (currentToken.getType() == TokenType.PLUS) {
             match(TokenType.PLUS);
             term();
-            output.add("add");
+            emit("ADD");
             oper();
         } else if (currentToken.getType() == TokenType.MINUS) {
             match(TokenType.MINUS);
             term();
-            output.add("sub");
+            emit("SUB");
             oper();
         }
     }
@@ -59,14 +60,14 @@ public class PolishParser extends ParserAbstract {
         match(TokenType.IDENT);
         match(TokenType.EQ);
         expr();
-        output.add("pop " + id);
+        emit("POP " + id);
         match(TokenType.SEMICOLON);
     }
 
     void printStatement() {
         match(TokenType.PRINT);
         expr();
-        output.add("print");
+        emit("PRINT");
         match(TokenType.SEMICOLON);
     }
 
