@@ -30,7 +30,7 @@ oper →  + digit oper
 digit → 0 | .. | 9
 ```
 
-### 1.1 Implementação do Parser (Notação Infixada)
+### 1.2 Implementação do Parser
 
 - PolishNotationParser.java
 
